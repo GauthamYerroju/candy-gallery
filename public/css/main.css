@@ -1,0 +1,28 @@
+body {
+  color: #333;
+  background-color: #F6F8FA;
+  font-family: sans-serif;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2em;
+  background-color: white;
+}
+
+/* Helpers */
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
