@@ -2,5 +2,14 @@ extends layout
 
 block content
   h1= title
-  p= error
-  p= items
+  if error
+    p= JSON.stringify(error)
+  div
+    each item in items
+      span
+        p= item.name
+        if item.isVideo
+          video(width="320" height="240" sposter="http://www.kizoa.com/img/e8nZC.gif" controls)
+            source(src= "/file?path=" + item.relPath)
+        else
+          img(src= "/file?path=" + item.relPath)

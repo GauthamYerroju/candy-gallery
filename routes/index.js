@@ -4,6 +4,8 @@ var path = require('path');
 var fs = require('fs');
 var async = require('async');
 
+var videoExtensions = ['.mp4', '.webm'];
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   var renderVars = {
@@ -41,6 +43,7 @@ router.get('/', function(req, res, next) {
       if (item.isFolder) {
         // TODO: Get relPath of first image in folder
       }
+      item.isVideo = ( videoExtensions.indexOf( path.extname(file) ) >= 0 );
       callback(null, item);
     }, function(err, itemObjects) {
       if (err) {
