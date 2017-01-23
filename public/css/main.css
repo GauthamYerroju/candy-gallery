@@ -1,3 +1,15 @@
+/* Box sizing fix https://css-tricks.com/box-sizing/ */
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
 body {
   color: #333;
   background-color: #F6F8FA;
@@ -9,6 +21,56 @@ body {
   margin: 0 auto;
   padding: 2em;
   background-color: white;
+}
+
+/* MasonryJS */
+.grid-item {
+  display: block;
+}
+
+.item-container {
+  display: block;
+}
+.item-container.padded {
+  margin: 0.25em;
+}
+
+.grid-item img, .grid-item video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.item-container.padded img, video {
+  box-shadow: 0 0 2px #ccc;
+}
+
+.grid-sizer, .grid-item {
+  width: 100%;
+}
+
+
+@media only screen and (min-width: 400px) {
+  .grid-sizer, .grid-item {
+    width: 50%;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .grid-sizer, .grid-item {
+    width: 33.3333333%;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+  .grid-sizer, .grid-item {
+    width: 25%;
+  }
+}
+
+@media only screen and (min-width: 1100px) {
+  .grid-sizer, .grid-item {
+    width: 20%;
+  }
 }
 
 /* Helpers */

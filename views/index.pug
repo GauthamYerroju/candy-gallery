@@ -4,12 +4,14 @@ block content
   h1= title
   if error
     p= JSON.stringify(error)
-  div
+  div.grid
+    div.grid-sizer
     each item in items
-      span
-        p= item.name
-        if item.isVideo
-          video(width="320" height="240" sposter="http://www.kizoa.com/img/e8nZC.gif" controls)
-            source(src= "/file?path=" + item.relPath)
-        else
-          img(src= "/file?path=" + item.relPath)
+      div.grid-item
+        div.item-container.padded
+          //- span= item.name
+          if item.isVideo
+            video(controls)
+              source(src= "/file?path=" + item.relPath)
+          else
+            img(src= "/file?path=" + item.relPath)
