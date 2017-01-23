@@ -15,6 +15,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var path = require('path');
 
 var index = require('./routes/index');
 
@@ -34,7 +35,7 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  req.basePath = basePath;
+  req.basePath = basePath.replace(/\/$/g, '').replace('/', path.sep).replace('\\', path.sep);
   next();
 });
 
