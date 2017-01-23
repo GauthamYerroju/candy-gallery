@@ -10,13 +10,19 @@ var videoExtensions = ['.mp4', '.webm'];
 router.get('/', function(req, res, next) {
   var renderVars = {
     title: 'Gallery: ' + req.basePath,
+    basePath: req.basePath,
+    relPathList: [],
+    relPath: '',
     items: [],
     error: null
   };
-  var absPath = req.basePath;
+  var relPathList = [];
   if (req.query.path) {
-    absPath = path.join(absPath, req.query.path);
+    relPathList = req.query.path.replace(/^\/|\/$/g, '').split(path.sep);
+    renderVars.relPathList = relPathList;
+    renderVars.relPath = relPathList.join(path.sep);
   }
+  var absPath = path.join(req.basePath, relPathList.join(path.sep));
 
   var isFolder = fs.statSync(absPath).isDirectory();
   if (isFolder === false) {
@@ -34,14 +40,9 @@ router.get('/', function(req, res, next) {
       var absFilePath = path.join(absPath, file);
       var item = {};
       item.name = file;
-      if (req.query.path) {
-        item.relPath = path.join(req.query.path, file);
-      } else {
-        item.relPath = file;
-      }
       item.isFolder = fs.statSync(absFilePath).isDirectory();
       if (item.isFolder) {
-        // TODO: Get relPath of first image in folder
+        // TODO: Get relPathList of first image in folder
       }
       item.isVideo = ( videoExtensions.indexOf( path.extname(file) ) >= 0 );
       callback(null, item);

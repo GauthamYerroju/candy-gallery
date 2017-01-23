@@ -2,6 +2,11 @@ extends layout
 
 block content
   h1= title
+  div.path
+    span= basePath
+    each relPathItem in relPathList
+      span /
+      span= relPathItem
   if error
     p= JSON.stringify(error)
   div.grid
@@ -9,9 +14,9 @@ block content
     each item in items
       div.grid-item
         div.item-container.padded
-          //- span= item.name
+          span.item-name= item.name
           if item.isVideo
             video(controls)
-              source(src= "/file?path=" + item.relPath)
+              source(src= "/file?path=" + relPath)
           else
-            img(src= "/file?path=" + item.relPath)
+            img(src= "/file?path=" + relPath + '/' + item.name)
