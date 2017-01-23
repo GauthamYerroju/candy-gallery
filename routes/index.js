@@ -6,22 +6,37 @@ var async = require('async');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+  var renderVars = {
+    title: 'Gallery: ' + req.basePath,
+    items: [],
+    error: null
+  };
+  var absPath = req.basePath;
+  if (req.query.path) {
+    absPath = path.join(absPath, req.query.path);
+  }
 
-/* Get folder contents. */
-router.get('/folder', function(req, res, next) {
-  var absPath = path.join(req.basePath, req.query.path);
+  var isFolder = fs.statSync(absPath).isDirectory();
+  if (isFolder === false) {
+    res.render('index', renderVars);
+    return true;
+  }
+
   fs.readdir(absPath, function(err, files) {
     if (err) {
-      res.status(503).send(err);
+      renderVars.error = err;
+      res.render('index', renderVars);
       return false;
     }
     async.map(files, function(file, callback) {
       var absFilePath = path.join(absPath, file);
       var item = {};
       item.name = file;
-      item.relPath = path.join(req.query.path, file);
+      if (req.query.path) {
+        item.relPath = path.join(req.query.path, file);
+      } else {
+        item.relPath = file;
+      }
       item.isFolder = fs.statSync(absFilePath).isDirectory();
       if (item.isFolder) {
         // TODO: Get relPath of first image in folder
@@ -29,9 +44,11 @@ router.get('/folder', function(req, res, next) {
       callback(null, item);
     }, function(err, itemObjects) {
       if (err) {
-        res.status(503).send("Error when reading directory contents: " + err);
+        renderVars.error = err;
+        res.render('index', renderVars);
       } else {
-        res.send(itemObjects);
+        renderVars.items = itemObjects;
+        res.render('index', renderVars);
       }
     });
   });
@@ -39,7 +56,10 @@ router.get('/folder', function(req, res, next) {
 
 // Get file
 router.get('/file', function(req, res, next) {
-  var absPath = path.join(req.basePath + req.query.path);
+  var absPath = req.basePath;
+  if (req.query.path) {
+    absPath = path.join(absPath, req.query.path);
+  }
   // TODO: Check if file exists, return 404 or other error if not readable
   fs.stat(absPath, function(err, stats) {
     if (err) {
@@ -54,6 +74,5 @@ router.get('/file', function(req, res, next) {
     return true;
   }); 
 });
-
 
 module.exports = router;
