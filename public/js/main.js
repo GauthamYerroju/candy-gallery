@@ -1,38 +1,15 @@
-// Debounded resize https://www.paulirish.com/2009/throttled-smartresize-jquery-event-handler/
-(function($,sr){
+// var grid = $('.grid');
 
-  // debouncing function from John Hann
-  // http://unscriptable.com/index.php/2009/03/20/debouncing-javascript-methods/
-  var debounce = function (func, threshold, execAsap) {
-      var timeout;
+// grid.masonry({
+//     // set itemSelector so .grid-sizer is not used in layout
+//     itemSelector: '.grid-item',
+//     // use element for option
+//     columnWidth: '.grid-sizer',
+//     percentPosition: true
+// })
 
-      return function debounced () {
-          var obj = this, args = arguments;
-          function delayed () {
-              if (!execAsap)
-                  func.apply(obj, args);
-              timeout = null;
-          };
+// TODO: Try object-fit in square grid without masonry
 
-          if (timeout)
-              clearTimeout(timeout);
-          else if (execAsap)
-              func.apply(obj, args);
-
-          timeout = setTimeout(delayed, threshold || 100);
-      };
-  }
-  // smartresize 
-  jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
-
-})(jQuery,'smartresize');
-
-var grid = $('.grid');
-
-grid.masonry({
-    // set itemSelector so .grid-sizer is not used in layout
-    itemSelector: '.grid-item',
-    // use element for option
-    columnWidth: '.grid-sizer',
-    percentPosition: true
-})
+// TODO: Implement Unveil for paged/endless lazy loading https://luis-almeida.github.io/unveil/
+// TODO: Thumbnail server https://github.com/honza/node-thumbnail
+// TODO: Navigation breadcrumbs

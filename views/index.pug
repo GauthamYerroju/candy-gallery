@@ -9,14 +9,13 @@ block content
       span= relPathItem
   if error
     p= JSON.stringify(error)
-  div.grid
-    div.grid-sizer
+  div.grid.padded
+    //- div.grid-sizer
     each item in items
       div.grid-item
-        div.item-container.padded
-          span.item-name= item.name
+        div.item-container
           if item.isVideo
-            video(controls)
-              source(src= "/file?path=" + relPath)
+            video(controls title= item.name)
+              source(src= "/file?path=" + relPath + '/' + item.name)
           else
-            img(src= "/file?path=" + relPath + '/' + item.name)
+            img(title= item.name src= "/file?path=" + relPath + '/' + item.name)

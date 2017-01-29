@@ -12,7 +12,7 @@ html {
 
 body {
   color: #333;
-  background-color: #F6F8FA;
+  background-color: #eee;
   font-family: sans-serif;
 }
 
@@ -25,28 +25,49 @@ body {
 
 /* MasonryJS */
 .grid-item {
-  display: block;
+  display: inline-block;
+  position: relative;
+}
+.grid-item:before {
+  content: "";
+  display: inline-block;
+  margin-top: 100%;
 }
 
 .item-container {
   display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
-.item-container.padded {
-  margin: 0.25em;
+.item-container img, .item-container video {
+  display: block;
+  
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  
+  margin: 0 auto;
 }
 
-.grid-item img, .grid-item video {
-  width: 100%;
-  height: auto;
-  display: block;
+
+.grid.padded .item-container {
+  margin: 0.5em;
 }
-.item-container.padded img, video {
-  box-shadow: 0 0 2px #ccc;
+.grid.padded .item-container img, .grid.padded .item-container video {
+  border-radius: 2px;
+  box-shadow: 0 0 2px #333;
 }
 
 .grid-sizer, .grid-item {
   width: 100%;
 }
+
+
+
+
 
 
 @media only screen and (min-width: 400px) {
