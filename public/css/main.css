@@ -41,6 +41,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
+  transition: all 0.2s ease;
 }
 .item-container img, .item-container video {
   display: block;
@@ -65,6 +66,15 @@ body {
   width: 100%;
 }
 
+.item-container.zoom {
+  z-index: 1;
+  position: fixed;
+  left: 1em;
+  top: 1em;
+  right: 1em;
+  bottom: 1em;
+  background-color: rgba(0, 0, 0, 0.6);
+}
 
 
 

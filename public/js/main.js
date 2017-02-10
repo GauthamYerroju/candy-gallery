@@ -8,7 +8,17 @@
 //     percentPosition: true
 // })
 
-// TODO: Try object-fit in square grid without masonry
+$('.item-container').on('click', function() {
+    var zoomed = $(this);
+    if (zoomed.hasClass('zoom')) {
+        zoomed.removeClass('zoom');
+    } else {
+        $('.item-container.zoom').removeClass('zoom');
+        zoomed.addClass('zoom');
+    }
+    
+});
+
 
 // TODO: Implement Unveil for paged/endless lazy loading https://luis-almeida.github.io/unveil/
 // TODO: Thumbnail server https://github.com/honza/node-thumbnail
